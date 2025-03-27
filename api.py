@@ -42,11 +42,9 @@ def get_staffs():
 @app.route("/v1/staff/<string:staff_id>", methods=["GET"])
 def get_staff(staff_id):
     staff = find_staff_by_id(staff_id)
-    print(staff)
-    print(staff_directory)
     if not staff:
         return jsonify({"error": "Staff not found"}), 404
-    return jsonify(staff)
+    return jsonify(staff), 200
 
 #POST 
 @app.route("/v1/staff", methods=["POST"])
@@ -86,7 +84,7 @@ def update_staff(staff_id):
         staff_directory[staff_index]["email"] = data.get("email", staff_directory[staff_index]["email"])
         staff_directory[staff_index]["role"] = data.get("role", staff_directory[staff_index]["role"])
 
-        return jsonify({"message": "Staff updated successfully"}), 200
+        return jsonify({"message": "Staff updated successfully"}), 201
     else:
         return jsonify({"error": "Staff not found!"}), 404
     
